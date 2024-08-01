@@ -1,34 +1,34 @@
 const http = require('http');
+const {
+    getHome,
+    getHTML,
+    getText,
+    getComments,
+    postComment,
+    hendleNotFound,
+} = require('./hendlers');
+
 const PORT = 3001;
-const comments = [
-    { id: 1, text: 'First comment', author: 'Bob' },
-    { id: 2, text: 'Second comment', author: 'Martin' },
-    { id: 3, text: 'Third comment', author: 'Peter' },
-];
+
 const server = http.createServer((req, res) => {
-    if (req.url === '/html') {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/html');
-        res.write('<html><body><div>');
-        res.write('<h1>Greetings from the HTTP server!</h1>');
-        res.write('</div></body></html>');
-        return res.end();
-    }
-    if (req.url === '/text') {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        return res.end('This is plain text!');
-    }
-    if (req.url === '/json') {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.write(JSON.stringify(comments));
-        return res.end();
+    if (req.method === 'GET' && req.url === '/') {
+        return getHome(req, res);
     }
 
-    res.statusCode = 404;
-    res.setHeader('Content-Type', 'text/html');
-    return res.end('<h1>Page not found!</h1>');
+    if (req.method === 'GET' && req.url === '/html') {
+        return getHTML(req, res);
+    }
+    if (req.method === 'GET' && req.url === '/text') {
+        return getText(req, res);
+    }
+    if (req.method === 'GET' && req.url === '/comments') {
+        return getComments(req, res);
+    }
+    if (req.method === 'POST' && req.url === '/comments') {
+        return postComment(req, res);
+    }
+
+    return hendleNotFound(req, res);
 });
 
 server.listen(PORT, () => {
