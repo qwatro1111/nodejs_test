@@ -1,0 +1,23 @@
+{
+    "name": "npm-project",
+    "version": "1.0.0",
+    "description": " My NPM project",
+    "main": " ",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "test": "jest"
+    },
+    "keywords": [
+        "npm"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.19.2"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "nodemon": "^3.1.4"
+    }
+}
